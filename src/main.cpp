@@ -59,7 +59,11 @@ static void process_file(std::istream &input)
     std::cout << "Network v.1 packets:   " << stats.network_v1_packets << "\n"
               << "Network v.2 packets:   " << stats.network_v2_packets << "\n"
               << "Network v.1 addresses: " << stats.network_v1_addresses << "\n"
-              << "Network v.2 addresses: " << stats.network_v2_addresses << "\n";
+              << "Network v.2 addresses: " << stats.network_v2_addresses << "\n"
+              << "Transport v.1 packets: " << stats.transport_v1_packets << "\n"
+              << "Transport v.2 packets: " << stats.transport_v2_packets << "\n"
+              << "Transport v.1 errors:  " << stats.transport_v1_errors << "\n"
+              << "Transport v.2 errors:  " << stats.transport_v2_errors << "\n";
 }
 
 static std::vector<std::string> parse_args(int argc, char *argv[])

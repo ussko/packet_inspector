@@ -8,12 +8,6 @@ NetworkInspectorV2::NetworkInspectorV2()
     _header_size = sizeof(network_v2_t);
 }
 
-void NetworkInspectorV2::update_stats(stats_t &stats)
-{
-    stats.network_v2_packets += _packets;
-    stats.network_v2_addresses += _addresses.size();
-}
-
 std::pair<transport_version, uint16_t> NetworkInspectorV2::_process_header(network_t &header)
 {
     uint64_t addr_src = 0;
@@ -33,4 +27,10 @@ std::pair<transport_version, uint16_t> NetworkInspectorV2::_process_header(netwo
     _addresses.insert(addr_dst);
 
     return std::make_pair(static_cast<transport_version>(protocol), data_size);
+}
+
+void NetworkInspectorV2::_update_stats(stats_t &stats)
+{
+    stats.network_v2_packets += _packets;
+    stats.network_v2_addresses += _addresses.size();
 }

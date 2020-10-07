@@ -1,3 +1,5 @@
+#pragma once
+
 #include <memory>
 
 #include "network_inspector_v1.h"

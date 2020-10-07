@@ -60,6 +60,12 @@ struct transport_v2_t
     uint16_t    data_size;
 };
 
+union transport_t
+{
+    transport_v1_t v1;
+    transport_v2_t v2;
+};
+
 static const uint8_t SESSION_FIRST = 0x01;
 static const uint8_t SESSION_LAST  = 0x02;
 
