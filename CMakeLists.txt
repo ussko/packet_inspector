@@ -22,4 +22,6 @@ set(GCC_WARNINGS
         "-Wswitch-default")
 add_definitions(${GCC_WARNINGS})
 
-add_executable(packet_inspector main.cpp)
+include_directories(${PROJECT_SOURCE_DIR}/include)
+
+add_subdirectory(src)
