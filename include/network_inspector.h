@@ -1,25 +1,18 @@
 #pragma once
 
-#include <fstream>
 #include <unordered_set>
 
+#include "inetwork_inspector.h"
 #include "protocols.h"
-#include "stats.h"
 
-class NetworkInspector
+class NetworkInspector: public INetworkInspector
 {
 public:
-    NetworkInspector(network_version version);
+    bool read_packet(std::istream &input) override;
 
-    bool read_packet(std::istream &input);
-    void update_stats(stats_t &stats);
+protected:
+    size_t _header_size{0};
 
-private:
-    network_version _version;
-    unsigned _packets_v1{0};
-    unsigned _packets_v2{0};
-    std::unordered_set<uint32_t> _addresses_v1;
-    std::unordered_set<uint64_t> _addresses_v2;
-
-    uint16_t _check_sum(uint8_t *data, size_t size);
+    virtual std::pair<transport_version, uint16_t> _process_header(network_t &header) = 0;
+    uint16_t _check_sum(const uint8_t *data, size_t size);
 };

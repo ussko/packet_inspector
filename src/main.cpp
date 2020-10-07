@@ -6,7 +6,7 @@
 
 #include <getopt.h>
 
-#include "network_inspector.h"
+#include "network_inspector_factory.h"
 
 static void process_file(std::istream &input);
 static std::vector<std::string> parse_args(int argc, char *argv[]);
@@ -35,25 +35,26 @@ int main(int argc, char *argv[])
 
 static void process_file(std::istream &input)
 {
-    NetworkInspector network_v1{NETWORK_V1};
-    NetworkInspector network_v2{NETWORK_V2};
     stats_t stats;
+    NetworkInspectorFactory network;
+    auto network_v1 = network.make_network_inspector(NETWORK_V1);
+    auto network_v2 = network.make_network_inspector(NETWORK_V2);
 
     while (!input.eof())
     {
         bool valid = false;
         auto c = input.peek();
         if (c == NETWORK_V1)
-            valid = network_v1.read_packet(input);
+            valid = network_v1->read_packet(input);
         else if (c == NETWORK_V2)
-            valid = network_v2.read_packet(input);
+            valid = network_v2->read_packet(input);
 
         if (!valid)
             input >> c;
     }
 
-    network_v1.update_stats(stats);
-    network_v2.update_stats(stats);
+    network_v1->update_stats(stats);
+    network_v2->update_stats(stats);
 
     std::cout << "Network v.1 packets:   " << stats.network_v1_packets << "\n"
               << "Network v.2 packets:   " << stats.network_v2_packets << "\n"
