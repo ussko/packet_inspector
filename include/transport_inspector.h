@@ -13,5 +13,5 @@ protected:
     size_t _header_size{0};
 
     virtual uint16_t _process_header(buf_iterator header_begin) = 0;
-    uint16_t _check_sum(const uint8_t *data, size_t size);
+    uint16_t _check_sum(buf_iterator begin, buf_iterator end);
 };

@@ -43,7 +43,7 @@ static void process_file(std::istream &input)
     while (!input.eof())
     {
         bool valid = false;
-        auto c = input.peek();
+        char c = input.peek();
         if (c == NETWORK_V1)
             valid = network_v1->read_packet(input);
         else if (c == NETWORK_V2)

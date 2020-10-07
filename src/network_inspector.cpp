@@ -1,4 +1,3 @@
-#include <array>
 #include <iostream>
 
 #include "network_inspector.h"
@@ -55,12 +54,12 @@ void NetworkInspector::update_stats(stats_t &stats)
     _transport_v2->update_stats(stats);
 }
 
-uint16_t NetworkInspector::_check_sum(const uint8_t *data, size_t size)
+uint16_t NetworkInspector::_check_sum(buf_iterator begin, buf_iterator end)
 {
     uint16_t result = 0;
 
-    for (size_t i = 0; i < size; ++i)
-        result += data[i];
+    while (begin != end)
+        result += *(begin++);
 
     return result;
 }
