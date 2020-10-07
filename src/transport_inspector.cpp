@@ -6,10 +6,11 @@
 bool TransportInspector::process_packet(buf_iterator begin, buf_iterator end)
 {
     _packets++;
-    const auto app_size = _process_header(begin);
+    if (!_process_header(begin))
+        return false;
 
     auto check_sum_offset = end;
-    std::advance(check_sum_offset, _header_size + app_size);
+    std::advance(check_sum_offset, -sizeof(transport_t::v1.data_size));
     const uint16_t check_sum = ntohs(*reinterpret_cast<uint16_t*>(&(*check_sum_offset)));
     if (check_sum != _check_sum(begin, check_sum_offset))
     {

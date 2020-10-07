@@ -62,6 +62,8 @@ static void process_file(std::istream &input)
               << "Network v.2 addresses: " << stats.network_v2_addresses << "\n"
               << "Transport v.1 packets: " << stats.transport_v1_packets << "\n"
               << "Transport v.2 packets: " << stats.transport_v2_packets << "\n"
+              << "Transport v.1 ports:   " << stats.transport_v1_ports << "\n"
+              << "Transport v.2 ports:   " << stats.transport_v2_ports << "\n"
               << "Transport v.1 errors:  " << stats.transport_v1_errors << "\n"
               << "Transport v.2 errors:  " << stats.transport_v2_errors << "\n";
 }

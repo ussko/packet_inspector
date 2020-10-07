@@ -10,5 +10,5 @@ public:
     void update_stats(stats_t &stats) override;
 
 protected:
-    uint16_t _process_header(buf_iterator header_begin) override;
+    bool _process_header(buf_iterator header_begin) override;
 };
