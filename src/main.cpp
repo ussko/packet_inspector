@@ -56,16 +56,17 @@ static void process_file(std::istream &input)
     network_v1->update_stats(stats);
     network_v2->update_stats(stats);
 
-    std::cout << "Network v.1 packets:   " << stats.network_v1_packets << "\n"
-              << "Network v.2 packets:   " << stats.network_v2_packets << "\n"
-              << "Network v.1 addresses: " << stats.network_v1_addresses << "\n"
-              << "Network v.2 addresses: " << stats.network_v2_addresses << "\n"
-              << "Transport v.1 packets: " << stats.transport_v1_packets << "\n"
-              << "Transport v.2 packets: " << stats.transport_v2_packets << "\n"
-              << "Transport v.1 ports:   " << stats.transport_v1_ports << "\n"
-              << "Transport v.2 ports:   " << stats.transport_v2_ports << "\n"
-              << "Transport v.1 errors:  " << stats.transport_v1_errors << "\n"
-              << "Transport v.2 errors:  " << stats.transport_v2_errors << "\n";
+    std::cout << "Network v.1 packets:    " << stats.network_v1_packets << "\n"
+              << "Network v.2 packets:    " << stats.network_v2_packets << "\n"
+              << "Network v.1 addresses:  " << stats.network_v1_addresses << "\n"
+              << "Network v.2 addresses:  " << stats.network_v2_addresses << "\n"
+              << "Transport v.1 packets:  " << stats.transport_v1_packets << "\n"
+              << "Transport v.2 packets:  " << stats.transport_v2_packets << "\n"
+              << "Transport v.1 ports:    " << stats.transport_v1_ports << "\n"
+              << "Transport v.2 ports:    " << stats.transport_v2_ports << "\n"
+              << "Transport v.1 errors:   " << stats.transport_v1_errors << "\n"
+              << "Transport v.2 errors:   " << stats.transport_v2_errors << "\n"
+              << "Transport v.2 sessions: " << stats.transport_v2_sessions << "\n";
 }
 
 static std::vector<std::string> parse_args(int argc, char *argv[])

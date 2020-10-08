@@ -17,6 +17,12 @@ bool TransportInspector::process_packet(buf_iterator begin, buf_iterator end)
         _errors++;
         return false;
     }
+
+    auto data_begin = begin;
+    auto data_end = check_sum_offset;
+    std::advance(data_begin, _header_size);
+    _process_payload(data_begin, data_end);
+
     return true;
 }
 

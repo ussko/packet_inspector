@@ -26,6 +26,11 @@ std::pair<transport_version, uint16_t> NetworkInspectorV1::_process_header(netwo
     _addresses.insert(addr_src);
     _addresses.insert(addr_dst);
 
+    if (protocol == TRANSPORT_V2)
+    {
+        if (auto tv2 = dynamic_cast<TransportInspectorV2*>(_transport_v2.get()); tv2 != nullptr)
+            tv2->set_current_addr(static_cast<uint64_t>(addr_src), static_cast<uint64_t>(addr_dst));
+    }
     return std::make_pair(static_cast<transport_version>(protocol), data_size);
 }
 

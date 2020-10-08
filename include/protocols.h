@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stddef.h>
 #include <stdint.h>
 
 #pragma pack(1)
@@ -55,8 +56,8 @@ struct transport_v2_t
 {
     uint16_t    port_src;
     uint16_t    port_dst;
-    uint32_t    num_fragment;
-    uint8_t     session;
+    uint32_t    fragment_number;
+    uint8_t     flags;
     uint16_t    data_size;
 };
 

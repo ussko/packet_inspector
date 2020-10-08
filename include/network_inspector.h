@@ -3,6 +3,7 @@
 #include <array>
 #include <unordered_set>
 
+#include "buffer.h"
 #include "inetwork_inspector.h"
 #include "protocols.h"
 #include "transport_inspector_factory.h"
@@ -19,9 +20,6 @@ protected:
     size_t _header_size{0};
     std::unique_ptr<ITransportInspector> _transport_v1;
     std::unique_ptr<ITransportInspector> _transport_v2;
-
-    using buf_t = std::array<uint8_t, MAX_DATA_SIZE>;
-    using buf_iterator = buf_t::iterator;
 
     virtual std::pair<transport_version, uint16_t> _process_header(network_t &header) = 0;
     virtual void _update_stats(stats_t &stats) = 0;

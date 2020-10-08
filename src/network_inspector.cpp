@@ -14,7 +14,7 @@ NetworkInspector::NetworkInspector()
 bool NetworkInspector::read_packet(std::istream &input)
 {
     network_t header;
-    std::array<uint8_t, MAX_DATA_SIZE> data;
+    buf_t data;
 
     input.read(reinterpret_cast<char*>(&header), _header_size);
     try

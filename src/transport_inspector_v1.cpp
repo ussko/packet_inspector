@@ -24,3 +24,8 @@ bool TransportInspectorV1::_process_header(buf_iterator header_begin)
 
     return true;
 }
+
+void TransportInspectorV1::_process_payload(buf_iterator data_begin, buf_iterator data_end)
+{
+
+}
