@@ -3,8 +3,8 @@
 void SessionManager::add_fragment(endpoint_t src, endpoint_t dst,
                                   uint32_t fragment_number, uint8_t flags)
 {
-    session_id_t session_id{src, dst};
-    session_fragment_t fragment{.fragment_number = fragment_number, .data{}};
+    const session_id_t session_id{src, dst};
+    const session_fragment_t fragment{.fragment_number = fragment_number, .data{}};
 
     auto insert_fragment = [&fragment, &flags](session_t &session)
     {
@@ -41,15 +41,33 @@ void SessionManager::add_fragment(endpoint_t src, endpoint_t dst,
 void SessionManager::add_fragment_data(endpoint_t src, endpoint_t dst, uint32_t fragment_number,
                                        buf_iterator data_begin, buf_iterator data_end)
 {
+    const session_id_t session_id{src, dst};
+    const session_fragment_t fragment{.fragment_number = fragment_number, .data{}};
 
+    if (_sessions.count(session_id) == 0)
+        return;
+
+    auto [begin, end] = _sessions.equal_range(session_id);
+    for (; begin != end; ++begin)
+    {
+        auto &[id, session] = *begin;
+        if (auto it = session.fragments.find(fragment);
+            it != session.fragments.end())
+        {
+            auto fragment_handler = session.fragments.extract(it);
+            fragment_handler.value().data.assign(data_begin, data_end);
+            session.fragments.insert(std::move(fragment_handler));
+        }
+    }
 }
 
 void SessionManager::update_stats(stats_t &stats)
 {
     for (const auto &[id, session] : _sessions)
     {
-        if (_is_valid_session(session))
-            _num_sessions++;
+        if (!_is_valid_session(session))
+            continue;
+        _num_sessions++;
     }
 
     stats.transport_v2_sessions += _num_sessions;
