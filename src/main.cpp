@@ -25,6 +25,11 @@ int main(int argc, char *argv[])
         {
             std::cout << file << ":\n";
             std::ifstream input{file};
+            if (!input.is_open())
+            {
+                std::cout << "unable to open " << file << '\n';
+                continue;
+            }
             process_file(input);
             std::cout << "\n";
         }
