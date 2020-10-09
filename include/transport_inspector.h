@@ -15,7 +15,7 @@ protected:
     unsigned _errors{0};
     size_t _header_size{0};
 
-    virtual bool _process_header(buf_iterator header_begin) = 0;
+    virtual uint16_t _process_header(buf_iterator header_begin) = 0;
     virtual void _process_payload(buf_iterator data_begin, buf_iterator data_end) = 0;
     uint16_t _check_sum(buf_iterator begin, buf_iterator end);
 };

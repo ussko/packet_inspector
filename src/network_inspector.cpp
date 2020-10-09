@@ -23,8 +23,7 @@ bool NetworkInspector::read_packet(std::istream &input)
         input.read(reinterpret_cast<char*>(data.data()), data_size);
 
         auto data_begin = data.begin();
-        auto data_end = data_begin;
-        std::advance(data_end, data_size);
+        auto data_end = data_begin + data_size;
 
         switch (protocol)
         {

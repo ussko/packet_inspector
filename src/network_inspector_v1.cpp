@@ -16,8 +16,7 @@ std::pair<transport_version, uint16_t> NetworkInspectorV1::_process_header(netwo
     uint16_t check_sum = ntohs(header.v1.check_sum);
 
     buf_iterator begin = reinterpret_cast<uint8_t*>(&header);
-    buf_iterator end = begin;
-    std::advance(end, _header_size - sizeof(check_sum));
+    buf_iterator end = begin + _header_size - sizeof(check_sum);
 
     if (check_sum != _check_sum(begin, end))
         throw std::runtime_error("Network v.1 bad checksum");

@@ -18,7 +18,7 @@ void TransportInspectorV1::update_stats(stats_t &stats)
     stats.text_packets += _num_text;
 }
 
-bool TransportInspectorV1::_process_header(buf_iterator header_begin)
+uint16_t TransportInspectorV1::_process_header(buf_iterator header_begin)
 {
     const auto &header = *(reinterpret_cast<transport_v1_t*>(&(*header_begin)));
     uint16_t port_src = ntohs(header.port_src);
@@ -26,7 +26,7 @@ bool TransportInspectorV1::_process_header(buf_iterator header_begin)
     _ports.insert(port_src);
     _ports.insert(port_dst);
 
-    return true;
+    return ntohs(header.data_size);
 }
 
 void TransportInspectorV1::_process_payload(buf_iterator data_begin, buf_iterator data_end)

@@ -12,7 +12,7 @@ public:
     void set_current_addr(uint64_t addr_src, uint64_t addr_dst);
 
 protected:
-    bool _process_header(buf_iterator header_begin) override;
+    uint16_t _process_header(buf_iterator header_begin) override;
     void _process_payload(buf_iterator data_begin, buf_iterator data_end) override;
 
 private:

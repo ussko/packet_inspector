@@ -22,7 +22,7 @@ void TransportInspectorV2::set_current_addr(uint64_t addr_src, uint64_t addr_dst
     _dst_current.addr = addr_dst;
 }
 
-bool TransportInspectorV2::_process_header(buf_iterator header_begin)
+uint16_t TransportInspectorV2::_process_header(buf_iterator header_begin)
 {
     const auto &header = *(reinterpret_cast<transport_v2_t*>(&(*header_begin)));
     uint16_t port_src = ntohs(header.port_src);
@@ -35,7 +35,7 @@ bool TransportInspectorV2::_process_header(buf_iterator header_begin)
     _fragment_num_current = ntohl(header.fragment_number);
     _session_mgr.add_fragment(_src_current, _dst_current, _fragment_num_current, header.flags);
 
-    return true;
+    return ntohs(header.data_size);
 }
 
 void TransportInspectorV2::_process_payload(buf_iterator data_begin, buf_iterator data_end)
