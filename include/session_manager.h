@@ -1,6 +1,6 @@
 #pragma once
 
-#include <set>
+#include <map>
 #include <unordered_map>
 #include <vector>
 
@@ -37,18 +37,9 @@ private:
     {
         bool operator()(const session_id_t &lhs, const session_id_t &rhs) const;
     };
-    struct session_fragment_t
-    {
-        uint32_t fragment_number;
-        std::vector<uint8_t> data;
-    };
-    struct session_fragment_less
-    {
-        bool operator()(const session_fragment_t &lhs, const session_fragment_t &rhs) const;
-    };
     struct session_t
     {
-        std::set<session_fragment_t, session_fragment_less> fragments;
+        std::map<uint32_t, std::vector<uint8_t>> fragments;
         uint32_t first{0};
         uint32_t last{0};
         bool has_first{false};
@@ -72,10 +63,4 @@ inline bool SessionManager::session_id_eq::operator()(const session_id_t &lhs,
 {
     return lhs.src.addr == rhs.src.addr && lhs.src.port == rhs.src.port &&
            lhs.dst.addr == rhs.dst.addr && lhs.dst.port == rhs.dst.port;
-}
-
-inline bool SessionManager::session_fragment_less::operator()(const session_fragment_t &lhs,
-                                                              const session_fragment_t &rhs) const
-{
-    return lhs.fragment_number < rhs.fragment_number;
 }
