@@ -47,7 +47,6 @@ private:
     };
 
     std::unordered_multimap<session_id_t, session_t, session_id_hash, session_id_eq> _sessions;
-    unsigned _num_sessions{0};
 
     bool _is_valid_session(const session_t &session);
 };

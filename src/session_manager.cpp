@@ -1,3 +1,4 @@
+#include "application_inspector.h"
 #include "session_manager.h"
 
 void SessionManager::add_fragment(endpoint_t src, endpoint_t dst,
@@ -59,13 +60,39 @@ void SessionManager::add_fragment_data(endpoint_t src, endpoint_t dst, uint32_t 
 
 void SessionManager::update_stats(stats_t &stats)
 {
+    ApplicationInspector app;
+    unsigned num_sessions{0};
+    unsigned num_binary{0};
+    unsigned num_json{0};
+    unsigned num_text{0};
+
     for (const auto &[id, session] : _sessions)
     {
         if (_is_valid_session(session))
-            _num_sessions++;
+            num_sessions++;
+
+        for (const auto &[fragment_number, fragment_data] : session.fragments)
+            app.add_session_fragment(fragment_data);
+        switch (auto data_class = app.process_session(); data_class)
+        {
+        case ApplicationInspector::APP_BINARY:
+            num_binary += session.fragments.size();
+            break;
+        case ApplicationInspector::APP_JSON:
+            num_json += session.fragments.size();
+            break;
+        case ApplicationInspector::APP_TEXT:
+            num_text += session.fragments.size();
+            break;
+        default:
+            break;
+        }
     }
 
-    stats.transport_v2_sessions += _num_sessions;
+    stats.transport_v2_sessions += num_sessions;
+    stats.binary_packets += num_binary;
+    stats.json_packets += num_json;
+    stats.text_packets += num_text;
 }
 
 bool SessionManager::_is_valid_session(const session_t &session)
