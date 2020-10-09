@@ -44,7 +44,7 @@
     <tr>
       <td>Network Header</td>
       <td>Checksum</td>
-      <td colspan=3>Network Data</td>
+      <td colspan=3 align="center">Network Data</td>
     </tr>
   </tbody>
 </table>
